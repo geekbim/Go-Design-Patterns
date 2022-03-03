@@ -1,7 +1,11 @@
 package main
 
+import "fmt"
+
 const (
-	TerroristDressType        = "tDress"
+	// TerroristDressType terrorist dresss type
+	TerroristDressType = "tDress"
+	// CounterTerroristDressType counter terrorist dress type
 	CounterTerroristDressType = "ctDress"
 )
 
@@ -21,7 +25,18 @@ func (d *dressFactory) getDressByType(dressType string) (dress, error) {
 	}
 
 	if dressType == TerroristDressType {
+		d.dressMap[dressType] = newTerroristDress()
+		return d.dressMap[dressType], nil
+	}
+
+	if dressType == CounterTerroristDressType {
 		d.dressMap[dressType] = newCounterTerroristDress()
 		return d.dressMap[dressType], nil
 	}
+
+	return nil, fmt.Errorf("wrong dress type passed")
+}
+
+func getDressFactorySingleInstance() *dressFactory {
+	return dressFactorySingleInstance
 }
